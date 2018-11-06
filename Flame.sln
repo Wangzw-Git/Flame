@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flame.Data", "Flame.Data\Fl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flame.Core", "Flame.Core\Flame.Core.csproj", "{306E5D85-CD9C-40CD-B02B-3811D6E752ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flame.Services", "Flame.Services\Flame.Services.csproj", "{D5022AD2-CB69-4CCC-962F-320FADD82D41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{306E5D85-CD9C-40CD-B02B-3811D6E752ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{306E5D85-CD9C-40CD-B02B-3811D6E752ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{306E5D85-CD9C-40CD-B02B-3811D6E752ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5022AD2-CB69-4CCC-962F-320FADD82D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5022AD2-CB69-4CCC-962F-320FADD82D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5022AD2-CB69-4CCC-962F-320FADD82D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5022AD2-CB69-4CCC-962F-320FADD82D41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +72,6 @@ Global
 		{4C21F9DA-8083-477F-8B22-559B2B7C7BCE} = {3E08BE69-B027-4971-8044-C7F858A857E5}
 		{248624B0-7C0C-40AB-883D-6157BF226212} = {07E5251E-4734-4471-84C1-43B66D335094}
 		{306E5D85-CD9C-40CD-B02B-3811D6E752ED} = {07E5251E-4734-4471-84C1-43B66D335094}
+		{D5022AD2-CB69-4CCC-962F-320FADD82D41} = {1B33C389-5B7B-4A56-86EA-4BAC50F45F5D}
 	EndGlobalSection
 EndGlobal

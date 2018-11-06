@@ -5,19 +5,25 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Flame.Framework.ViewEngine;
+using Flame.Web.Infrastructure;
+using Flame.Core;
 
 namespace Flame.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
+            //初始化
+            FlameEngine.Initialize();
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             //使用自定义的视图引擎
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new FlameRazorViewEngine());
+            
         }
     }
 }

@@ -43,6 +43,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -94,9 +102,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DependencyRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -111,14 +121,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Plugins\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flame.Core\Flame.Core.csproj">
+      <Project>{306e5d85-cd9c-40cd-b02b-3811d6e752ed}</Project>
+      <Name>Flame.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Flame.Framework\Flame.Framework.csproj">
       <Project>{4c21f9da-8083-477f-8b22-559b2b7c7bce}</Project>
       <Name>Flame.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Flame.Services\Flame.Services.csproj">
+      <Project>{d5022ad2-cb69-4ccc-962f-320fadd82d41}</Project>
+      <Name>Flame.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
