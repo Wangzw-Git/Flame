@@ -14,5 +14,7 @@ namespace Flame.Data
         int SaveChanges();
 
         IEnumerable<TElement> SqlQuery<TElement>(string sql, params object[] parameters);
+
+        int ExecuteSqlCommand(string sql, params object[] parameters);
     }
 }

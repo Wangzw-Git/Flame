@@ -24,5 +24,7 @@ namespace Flame.Data
 
         [StringLength(512)]
         public string Ts_Desc { get; set; }
+
+        public DateTime? Ts_AddDate { get; set; }
     }
 }

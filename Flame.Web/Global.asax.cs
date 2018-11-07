@@ -7,6 +7,7 @@ using System.Web.Routing;
 using Flame.Framework.ViewEngine;
 using Flame.Web.Infrastructure;
 using Flame.Core;
+using FluentScheduler;
 
 namespace Flame.Web
 {
@@ -23,6 +24,9 @@ namespace Flame.Web
             //使用自定义的视图引擎
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new FlameRazorViewEngine());
+
+            //定时器
+            JobManager.Initialize(new TimerDemo());
             
         }
     }

@@ -28,10 +28,11 @@ namespace Flame.Core
         {
             var builder = new ContainerBuilder();
             //找到实现IDependencyRegister接口的类，并调用Register方法
-            var assemblys = AppDomain.CurrentDomain.GetAssemblies().Where(s=>s.FullName.StartsWith("Flame."));
+            var assemblys = AppDomain.CurrentDomain.GetAssemblies().Where(s => s.FullName.StartsWith("Flame."));
             foreach (var item in assemblys)
             {
-                var registerTypeList = item.GetTypes().Where(s => s.BaseType == typeof(IDependencyRegister));
+                var baseType = typeof(IDependencyRegister);
+                var registerTypeList = item.GetTypes().Where(s => baseType.IsAssignableFrom(s) && !s.IsInterface && s.IsClass && !s.IsAbstract);
                 foreach (var registerType in registerTypeList)
                 {
                     var instance = (IDependencyRegister)Activator.CreateInstance(registerType);

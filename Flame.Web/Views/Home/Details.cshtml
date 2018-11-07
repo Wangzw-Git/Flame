@@ -1,0 +1,66 @@
+﻿@model Flame.Data.TimerScheduler
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TimerScheduler</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_NameSpace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_NameSpace)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_RunStatu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_RunStatu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_Interval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_Interval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_Desc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_Desc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ts_AddDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ts_AddDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Ts_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

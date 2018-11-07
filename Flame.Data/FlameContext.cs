@@ -30,5 +30,10 @@ namespace Flame.Data
         {
             return this.Database.SqlQuery<TElement>(sql, parameters);
         }
+
+        public int ExecuteSqlCommand(string sql, params object[] parameters)
+        {
+            return this.Database.ExecuteSqlCommand(sql, parameters);
+        }
     }
 }
