@@ -17,11 +17,5 @@ namespace Flame.Core.Plugins
         /// 卸载
         /// </summary>
         void UnInstall();
-
-        /// <summary>
-        /// 是否已安装
-        /// </summary>
-        /// <returns></returns>
-        bool IsInstalled();
     }
 }
