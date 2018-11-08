@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Flame.Framework
 {
-    public static class FileHelper
+    public class FileHelper
     {
         private static object _lockObj = new object();
 
