@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Flame.Plugin.Email.Controllers
 {
-    public class EmailController : Controller
+    public class HomeController : Controller
     {
         // GET: Email
         public ActionResult Index()

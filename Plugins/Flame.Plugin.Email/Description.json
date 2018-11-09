@@ -1,6 +1,9 @@
 ﻿{
-  "Name": "右键系统",
+  "Name": "邮件系统",
+  "SystemName": "Flame.Plugin.Email",
   "Version": "1.0.0",
-  "Description": "用于发送右键",
+  "Description": "用于发送邮件",
+  "Author": "Flame",
+  "AssemblyName": "Flame.Plugin.Email.dll",
   "Order": 1
 }

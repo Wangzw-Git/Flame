@@ -1,13 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using Flame.Core.Plugins;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Compilation;
 
+[assembly: PreApplicationStartMethod(typeof(PluginHelper), "InitPlugins")]
 namespace Flame.Core.Plugins
 {
+
     public class PluginHelper
     {
         public const string InstalledFilePath = "~/App_Data/InstallPlugins.txt";
@@ -38,20 +44,39 @@ namespace Flame.Core.Plugins
                 foreach (var pathItem in pluginPathList)
                 {
                     //判断是否存在插件描述文件
-                    FileInfo[] files = new DirectoryInfo(pathItem).GetFiles(PluginDescriptionFile);
-                    if (files?.Count()>0)
+                    FileInfo[] files = new DirectoryInfo(pathItem).GetFiles();
+                    if (files?.Count() > 0)
                     {
-                        var description = JsonConvert.DeserializeObject<PluginDescription>(File.ReadAllText(files[0].FullName));
-                        //是否安装
-                        description.IsInstalled = installedPlugins.Any(s => s.Equals(description.Name, StringComparison.CurrentCultureIgnoreCase));
-                        //找到主程序集
+                        var descFile = files.FirstOrDefault(s => s.Name.Equals(PluginDescriptionFile, StringComparison.CurrentCultureIgnoreCase));
+                        if (descFile != null)
+                        {
+                            //获取描述信息
+                            var description = JsonConvert.DeserializeObject<PluginDescription>(File.ReadAllText(descFile.FullName));
+                            
+                            //是否安装
+                            description.IsInstalled = installedPlugins.Any(s => s.Equals(description.Name, StringComparison.CurrentCultureIgnoreCase));
+                            
+                            //找到主程序集，加载到主程序集中
+                            FileInfo assemblyFile = files.FirstOrDefault(s => s.Name.Equals(description.AssemblyName, StringComparison.CurrentCultureIgnoreCase));
+                            var assembly = Assembly.Load(AssemblyName.GetAssemblyName(assemblyFile.FullName));
+                            description.MainAssembly = assembly;
+                            BuildManager.AddReferencedAssembly(assembly);
+                            
+                            //加载其它程序集
+                            foreach (var file in files.Where(s => s.Extension.Equals(".dll",StringComparison.CurrentCultureIgnoreCase) && !s.Name.Equals(description.AssemblyName, StringComparison.CurrentCultureIgnoreCase)))
+                            {
+                                BuildManager.AddReferencedAssembly(Assembly.Load(AssemblyName.GetAssemblyName(file.Name)));
+                            }
 
-                        //
-                        pluginList.Add(description);
+                            //找到集成IPlugin接口的类
+                            description.PluginType = assembly.GetTypes().FirstOrDefault(s => typeof(IPlugins).IsAssignableFrom(s) && !s.IsInterface && s.IsClass && !s.IsAbstract);
+                            pluginList.Add(description);
+                        }
                     }
                 }
-
+                pluginList = pluginList.OrderBy(s => s.Order).ToList();
             }
+            InstalledPluginList = pluginList;
         } 
         #endregion
 

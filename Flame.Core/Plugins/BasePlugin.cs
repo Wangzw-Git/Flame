@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace Flame.Core.Plugins
 {
-    public class BasePlugin : IPlugins
+    public abstract class BasePlugin : IPlugins
     {
-        public BasePlugin()
-        {
+        public virtual PluginDescription PluginDescriptor { get; set;}
 
+        public virtual void Install()
+        {
+            PluginHelper.InstallPlugin(PluginDescriptor.SystemName);
         }
         
-        public void Install()
+        public virtual void UnInstall()
         {
-            throw new NotImplementedException();
-        }
-        
-        public void UnInstall()
-        {
-            throw new NotImplementedException();
+            PluginHelper.UninstallPlugin(PluginDescriptor.SystemName);
         }
     }
 }
