@@ -1,0 +1,6 @@
+﻿{
+  "Name": "右键系统",
+  "Version": "1.0.0",
+  "Description": "用于发送右键",
+  "Order": 1
+}

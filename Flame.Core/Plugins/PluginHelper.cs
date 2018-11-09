@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,8 +12,50 @@ namespace Flame.Core.Plugins
     {
         public const string InstalledFilePath = "~/App_Data/InstallPlugins.txt";
         public const string PluginPath = "~/Plugins";
+        public const string PluginDescriptionFile = "Description.json";
+
+        public static List<PluginDescription> InstalledPluginList = new List<PluginDescription>();
 
 
+        #region 初始化插件 - InitPlugins()
+        /// <summary>
+        /// 初始化插件
+        /// </summary>
+        public static void InitPlugins()
+        {
+            var pluginList = new List<PluginDescription>();
+            //找到插件dll存放目录
+            string pluginBasePath = CommonHelper.MapPath(PluginPath);
+
+            if (Directory.Exists(pluginBasePath))
+            {
+                //获取已安装插件列表
+                string filePath = CommonHelper.MapPath(InstalledFilePath);
+                var installedPlugins = GetInstalledPlugins(filePath);
+
+                //遍历Plugins文件夹下所有的插件文件夹
+                var pluginPathList = Directory.GetDirectories(pluginBasePath);
+                foreach (var pathItem in pluginPathList)
+                {
+                    //判断是否存在插件描述文件
+                    FileInfo[] files = new DirectoryInfo(pathItem).GetFiles(PluginDescriptionFile);
+                    if (files?.Count()>0)
+                    {
+                        var description = JsonConvert.DeserializeObject<PluginDescription>(File.ReadAllText(files[0].FullName));
+                        //是否安装
+                        description.IsInstalled = installedPlugins.Any(s => s.Equals(description.Name, StringComparison.CurrentCultureIgnoreCase));
+                        //找到主程序集
+
+                        //
+                        pluginList.Add(description);
+                    }
+                }
+
+            }
+        } 
+        #endregion
+
+        #region 安装插件 - InstallPlugin(string pluginName)
         /// <summary>
         /// 安装插件
         /// </summary>
@@ -40,14 +83,68 @@ namespace Flame.Core.Plugins
                 SaveInstalledPlugins(installedPlugins, filePath);
             }
         }
+        #endregion
 
+        #region 卸载插件 - UninstallPlugin(string pluginName)
+        /// <summary>
+        /// 卸载插件
+        /// </summary>
+        /// <param name="pluginName"></param>
+        public static void UninstallPlugin(string pluginName)
+        {
+            if (string.IsNullOrEmpty(pluginName))
+            {
+                throw new ArgumentNullException(nameof(pluginName), "插件名不能为空！");
+            }
+            string filePath = CommonHelper.MapPath(InstalledFilePath);
+            if (File.Exists(filePath))
+            {
+                var installedPlugins = GetInstalledPlugins(filePath);
+                //判断是否已经存在此插件名称
+                if (installedPlugins.Any(s => s.Equals(pluginName, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    installedPlugins.Remove(pluginName);
+                    //保存到文件
+                    SaveInstalledPlugins(installedPlugins, filePath);
+                }
+            }
+        }
+        #endregion
+
+        #region 是否安装 - IsInstall(string pluginName)
+        /// <summary>
+        /// 是否安装
+        /// </summary>
+        /// <param name="pluginName">插件名称</param>
+        /// <returns></returns>
+        public static bool IsInstall(string pluginName)
+        {
+            if (string.IsNullOrEmpty(pluginName))
+            {
+                throw new ArgumentNullException(nameof(pluginName), "插件名不能为空！");
+            }
+            string filePath = CommonHelper.MapPath(InstalledFilePath);
+            if (File.Exists(filePath))
+            {
+                var installedPlugins = GetInstalledPlugins(filePath);
+                //判断是否存在此插件名称
+                if (installedPlugins.Any(s => s.Equals(pluginName, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        } 
+        #endregion
+
+        #region 公共方法
+        #region 获取已安装的插件 - GetInstalledPlugins(string filePath)
         /// <summary>
         /// 获取已安装的插件
         /// </summary>
         /// <returns></returns>
         private static List<string> GetInstalledPlugins(string filePath)
         {
-            //string filePath = CommonHelper.MapPath(InstalledFilePath);
             if (!File.Exists(filePath))
             {
                 return new List<string>();
@@ -65,7 +162,7 @@ namespace Flame.Core.Plugins
                 //每次取一行数据，直至取完
                 while ((result = reader.ReadLine()) != null)
                 {
-                    if (!string.IsNullOrEmpty(result)&&!string.IsNullOrWhiteSpace(result))
+                    if (!string.IsNullOrEmpty(result) && !string.IsNullOrWhiteSpace(result))
                     {
                         list.Add(result.Trim());
                     }
@@ -73,7 +170,9 @@ namespace Flame.Core.Plugins
             }
             return list;
         }
+        #endregion
 
+        #region 保存已安装的插件 - SaveInstalledPlugins(List<string> installPlugins, string path)
         /// <summary>
         /// 保存已安装的插件
         /// </summary>
@@ -88,5 +187,7 @@ namespace Flame.Core.Plugins
                 File.WriteAllText(path, plugins);
             }
         }
+        #endregion 
+        #endregion
     }
-}
+} 

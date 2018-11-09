@@ -15,5 +15,7 @@ namespace Flame.Core.Plugins
         public string Description { get; set; }
 
         public int Order { get; set;}
+
+        public bool IsInstalled { get; set; }
     }
 }
