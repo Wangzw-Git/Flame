@@ -9,7 +9,7 @@ namespace Flame.Framework.Mvc
 {
     public class RouteResgister
     {
-        public void Register(RouteCollection routes)
+        public static void Register(RouteCollection routes)
         {
 
         }

@@ -8,6 +8,7 @@ using Flame.Framework.ViewEngine;
 using Flame.Web.Infrastructure;
 using Flame.Core;
 using FluentScheduler;
+using Flame.Framework.Mvc;
 
 namespace Flame.Web
 {
@@ -19,6 +20,8 @@ namespace Flame.Web
             FlameEngine.Initialize();
 
             AreaRegistration.RegisterAllAreas();
+            //注册插件Route
+            RouteResgister.Register(RouteTable.Routes);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             //使用自定义的视图引擎
